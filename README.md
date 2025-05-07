@@ -1,161 +1,170 @@
-# Video Recommendation Engine
+# 📽️ Video Recommendation Engine
 
-A sophisticated recommendation system that suggests personalized video content based on user preferences and engagement patterns using deep neural networks. Ref: to see what kind of motivational content you have to recommend, take reference from our Empowerverse App [ANDROID](https://play.google.com/store/apps/details?id=com.empowerverse.app) || [iOS](https://apps.apple.com/us/app/empowerverse/id6449552284).
+A minimal video recommendation system using FastAPI and deep learning, based on user mood and interaction data.
 
-## 🎯 Project Overview
+## 📌 Features
 
-This project implements a video recommendation algorithm that:
+* Fetches user, post, and interaction data from external/mock APIs.
+* Stores data in a local SQLite database using SQLAlchemy.
+* Trains a simple neural network recommendation model using PyTorch.
+* Recommends videos (posts) to users based on mood and past interaction history.
+* Provides FastAPI endpoints for triggering recommendations.
 
-- Delivers personalized content recommendations
-- Handles cold start problems using mood-based recommendations
-- Utilizes Graph/Deep neural networks for content analysis
-- Integrates with external APIs for data collection
-- Implements efficient data caching and pagination
+---
 
-## 🛠️ Technology Stack
+## ⚙️ Tech Stack
 
-- **Backend Framework**: FastAPI
-- **Documentation**: Swagger/OpenAPI
+* **Backend Framework**: FastAPI
+* **ORM**: SQLAlchemy
+* **Database**: SQLite
+* **Deep Learning**: PyTorch
+* **Migrations**: Alembic
 
-## 📋 Prerequisites
+---
 
-- Virtual environment (recommended)
+## 📁 Project Structure
+
+```
+video-recommendation-assignment/
+│
+├── app/
+│   ├── main.py               # FastAPI entrypoint
+│   ├── database.py           # SQLAlchemy DB setup
+│   ├── models/
+│   │   ├── user.py
+│   │   ├── post.py
+│   │   └── interaction.py
+│   ├── crud.py               # DB insert functions
+│   ├── schemas.py            # Pydantic schemas
+│   ├── ml/
+│   │   ├── train.py          # Model training
+│   │   └── recommend.py      # Recommendation inference
+│   ├── ingest.py             # API data fetching and saving
+│   └── mock_api/             # FastAPI mock endpoints
+│
+├── migrations/               # Alembic migration files
+├── requirements.txt
+└── README.md
+```
+
+---
 
 ## 🚀 Getting Started
 
-1. **Clone the Repository**
+### 1. Clone the Repository
 
-   ```bash
-   git clone https://github.com/Tim-Alpha/video-recommendation-assignment.git
-   ```
-   ```bash
-   cd video-recommendation-engine
-   ```
-1. **Set Up Virtual Environment**
-
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-2. **Install Dependencies**
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. **Configure Environment Variables**
-   Create a `.env` file in the root directory:
-
-   ```env
-
-   FLIC_TOKEN=your_flic_token
-   API_BASE_URL=https://api.socialverseapp.com
-   ```
-4. **Run Database Migrations**
-
-   ```bash
-   alembic upgrade head
-   ```
-5. **Start the Server**
-
-   ```bash
-   uvicorn app.main:app --reload
-   ```
-
-## 📊 API Endpoints
-
-### Recommendation Endpoints Has to Build
-
-1. **Get Personalized Feed**
-
-   ```
-   GET /feed?username={username}
-   ```
-
-   Returns personalized video recommendations for a specific user.
-2. **Get Category-based Feed**
-
-   ```
-   GET /feed?username={username}&project_code={project_code}
-   ```
-
-   Returns category-specific video recommendations for a user.
-
-### Data Collection Endpoints (Internal Use)
-
-APIs for data collection:
-
-### APIs
-
-1. **Get All Viewed Posts** (METHOD: GET):
-
-   ```
-   https://api.socialverseapp.com/posts/view?page=1&page_size=1000&resonance_algorithm=resonance_algorithm_cjsvervb7dbhss8bdrj89s44jfjdbsjd0xnjkbvuire8zcjwerui3njfbvsujc5if
-   ```
-2. **Get All Liked Posts** (METHOD: GET):
-
-   ```
-   https://api.socialverseapp.com/posts/like?page=1&page_size=1000&resonance_algorithm=resonance_algorithm_cjsvervb7dbhss8bdrj89s44jfjdbsjd0xnjkbvuire8zcjwerui3njfbvsujc5if
-   ```
-3. **Get All Inspired posts** (METHOD: GET):
-
-   ```
-   https://api.socialverseapp.com/posts/inspire?page=1&page_size=1000&resonance_algorithm=resonance_algorithm_cjsvervb7dbhss8bdrj89s44jfjdbsjd0xnjkbvuire8zcjwerui3njfbvsujc5if
-   ```
-4. **Get All Rated posts** (METHOD: GET):
-
-   ```
-   https://api.socialverseapp.com/posts/rating?page=1&page_size=1000&resonance_algorithm=resonance_algorithm_cjsvervb7dbhss8bdrj89s44jfjdbsjd0xnjkbvuire8zcjwerui3njfbvsujc5if
-   ```
-5. **Get All Posts** (Header required*) (METHOD: GET):
-
-   ```
-   https://api.socialverseapp.com/posts/summary/get?page=1&page_size=1000
-   ```
-6. **Get All Users** (Header required*) (METHOD: GET):
-
-   ```
-   https://api.socialverseapp.com/users/get_all?page=1&page_size=1000
-   ```
-
-### Authorization
-
-For autherization pass `Flic-Token` as header in the API request:
-
-Header:
-
-```json
-"Flic-Token": "flic_11d3da28e403d182c36a3530453e290add87d0b4a40ee50f17611f180d47956f"
+```bash
+git clone https://github.com/your-username/video-recommendation-assignment.git
+cd video-recommendation-assignment
 ```
 
-**Note**: All external API calls require the Flic-Token header:
+### 2. Set Up Environment
 
+```bash
+python -m venv rec
+source rec/bin/activate  # On Windows: rec\Scripts\activate
+pip install -r requirements.txt
+```
 
-## 📝 Submission Requirements
+### 3. Configure `.env`
 
-1. **GitHub Repository**
-   - Submit a merge request from your fork or cloned repository.
-   - Include a complete Postman collection demonstrating your API endpoints.
-   - Add a docs folder explaining how your recommendation system works.
-2. **Video Submission**
-   - Introduction Video (30–40 seconds)
-     - A short personal introduction (with face-cam).
-   - Technical Demo (3–5 minutes)
-     - Live demonstration of the APIs using Postman.
-     - Brief overview of the project.
-       Video Submission
+Create a `.env` file in the root directory:
 
-3. **Notification**
+```
+DATABASE_URL=sqlite:///./test.db
+```
 
-   - Join the Telegram group: [Video Recommendation](https://t.me/+VljbLT8o75QxN2I9)
-   - Notify upon completion
+---
 
-## ✅ Evaluation Checklist
+### 4. Run Alembic Migrations
 
-- [ ] All APIs are functional
-- [ ] Database migrations work correctly
-- [ ] README is complete and clear
-- [ ] Postman collection is included
-- [ ] Videos are submitted
-- [ ] Code is well-documented
-- [ ] Implementation handles edge cases
-- [ ] Proper error handling is implemented
+```bash
+alembic upgrade head
+```
+
+---
+
+### 5. Ingest Mock Data
+
+In one terminal, run the mock API:
+
+```bash
+uvicorn app.mock_api.main:app --port 8001
+```
+
+In another terminal, run:
+
+```bash
+python app/ingest.py
+```
+
+---
+
+### 6. Train the Recommendation Model
+
+```bash
+python app/ml/train.py
+```
+
+---
+
+### 7. Start the FastAPI Server
+
+```bash
+uvicorn app.main:app --reload
+```
+
+---
+
+## 🧠 Recommendation Logic
+
+* A simple feedforward neural network is trained using user-post interaction features:
+
+  * Mood
+  * Watch time
+  * Like status
+* It predicts and ranks post recommendations for users.
+
+---
+
+## 📢 API Endpoints
+
+| Method | Endpoint               | Description                        |
+| ------ | ---------------------- | ---------------------------------- |
+| GET    | `/recommend/{user_id}` | Get top recommendations for a user |
+| GET    | `/train`               | Trigger model training             |
+| GET    | `/ingest`              | Trigger data fetching and storage  |
+
+---
+
+## ✅ Assignment Scope Covered
+
+* ✅ API data fetching
+* ✅ SQLAlchemy models and DB storage
+* ✅ Deep learning-based recommendation logic
+* ✅ FastAPI endpoints for recommendations
+* ✅ No extra features added beyond assignment
+
+---
+
+## 🧪 Example
+
+```bash
+curl http://localhost:8000/recommend/1
+```
+
+---
+
+## 💼 Cleanup
+
+To reset the database:
+
+```bash
+rm test.db
+alembic downgrade base
+alembic upgrade head
+```
+
+---
+
+## 📄 License
