@@ -1,0 +1,8 @@
+httpx 
+python-dotenv
+fastapi
+uvicorn
+sqlalchemy 
+alembic 
+psycopg2-binary
+torch
